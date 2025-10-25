@@ -1,0 +1,37 @@
+---
+title: "HW5"
+author: "Sparsh Kumar"
+date: "2025-10-25"
+output: html_document
+---
+
+library(tidyverse)
+
+chicago <- read_csv("ChicagoStarsNEW.csv")
+gotham <- read_csv("GothamFCNEW.csv")
+houston <- read_csv("HoustonDashNEW.csv")
+
+#combine the csvs, https://www.datacamp.com/doc/r/merging
+
+all_players <- rbind(chicago, gotham, houston)
+
+#turn age from years and days to only year
+
+all_players$age_numeric <- as.numeric(substr(all_players$Age, 1, 2))
+
+# RQ1
+
+#histogram of age
+
+hist(all_players$age_numeric, main = "Distribution of Ages", xlab = "Age", ylab = "Number of Players")
+
+# RQ2
+
+#Randomly selecting a player
+
+highlight_player <- all_players[all_players$Player == "Bruninha", ]
+
+#Making scatterplot
+
+ggplot(all_players, aes(x = Min, y = Gls...9)) + geom_point(color = "black") + geom_point(data = highlight_player, aes(x = Min, y = Gls...9), color = "red") + geom_text(data = highlight_player, aes(x = Min, y = Gls...9, label = Player), color = "red", fontface = "bold", size = 4) + labs(x = "Minutes", y = "Goals", title = "Goals vs. Minutes")
+
